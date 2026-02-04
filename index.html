@@ -383,14 +383,12 @@
             height: 350px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid var(--primary);
-            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.5);
+            border: 5px solid transparent;
+            background: linear-gradient(135deg, var(--primary), var(--accent)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: profileGlow 3s ease-in-out infinite alternate;
         }
 
         .personal-details {
@@ -562,16 +560,26 @@
     }
 }
 
+.projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .project-card {
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.5s ease;
     opacity: 0;
     transform: translateY(30px);
-
+    cursor: pointer;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: auto;
+    padding: 20px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    backdrop-filter: blur(10px);
 }
 
 .project-card.active {
@@ -580,23 +588,47 @@
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 768px) {
-    .project-content {
-        padding: 16px;
-    }
+.project-card.expanded {
+    height: auto;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
 .project-content {
-    
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
     text-align: left;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.project-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.project-toggle {
+    font-size: 1.2rem;
+    color: var(--primary);
+    transition: transform 0.3s ease;
+}
+
+.project-card.expanded .project-toggle {
+    transform: rotate(180deg);
+}
+
+.project-description {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
 }
 
 .project-tech {
@@ -606,8 +638,19 @@
     color: var(--primary);
     border-radius: 20px;
     font-size: 0.8rem;
-    margin-top: 15px;
     align-self: flex-start;
+}
+
+.project-details {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.project-card.expanded .project-details {
+    display: block;
 }
 
 
@@ -1189,7 +1232,7 @@
 
             <div class="about-image">
                 <div class="profile-img-placeholder">
-                    <img src="/images/profile.jpeg" class="profile-img" alt="Profile Image">
+                    <img src="nandhini.jpeg" class="profile-img" alt="Profile Image">
                 </div>
             </div>
 
@@ -1320,44 +1363,86 @@
             <div class="projects-grid">
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Typing Speed Calculator</h3>
-                        <p>A terminal-based project to calculate typing speed and accuracy using C programming logic.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Typing Speed Calculator</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">A terminal-based project to calculate typing speed and accuracy using C programming logic.</p>
                         <span class="project-tech">C Language</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> Real-time speed calculation, accuracy tracking, user-friendly interface.</p>
+                            <p><strong>Technologies:</strong> C programming, standard libraries.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Alumni Management System</h3>
-                        <p>A tool to store, view, and manage alumni records effectively using Java.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Alumni Management System</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">A tool to store, view, and manage alumni records effectively using Java.</p>
                         <span class="project-tech">Java</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> CRUD operations, database integration, search functionality.</p>
+                            <p><strong>Technologies:</strong> Java, JDBC, MySQL.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Face Detection and Recognition in Machine Learning Techniques</h3>
-                        <p>By implementing OpenCV and ML algorithms.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Face Detection and Recognition in Machine Learning Techniques</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">By implementing OpenCV and ML algorithms.</p>
                         <span class="project-tech">Python</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> Face detection, recognition, real-time processing.</p>
+                            <p><strong>Technologies:</strong> Python, OpenCV, scikit-learn.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Testing the Height Difference Between Boys and Girls</h3>
-                        <p>Focused on hypothesis testing and data analysis.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Testing the Height Difference Between Boys and Girls</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">Focused on hypothesis testing and data analysis.</p>
                         <span class="project-tech">R</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> Statistical analysis, data visualization, hypothesis testing.</p>
+                            <p><strong>Technologies:</strong> R, ggplot2, dplyr.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Blood Bank Management System</h3>
-                        <p>To streamline donor and recipient data management.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Blood Bank Management System</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">To streamline donor and recipient data management.</p>
                         <span class="project-tech">DBMS</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> Donor registration, blood inventory, matching system.</p>
+                            <p><strong>Technologies:</strong> SQL, database design.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card glass">
                     <div class="project-content">
-                        <h3>Smart Water Management System</h3>
-                        <p>To enable real-time water level monitoring through a website-based dashboard with automated alerts for efficient water usage.</p>
+                        <div class="project-header">
+                            <h3 class="project-title">Smart Water Management System</h3>
+                            <i class="fas fa-chevron-down project-toggle"></i>
+                        </div>
+                        <p class="project-description">To enable real-time water level monitoring through a website-based dashboard with automated alerts for efficient water usage.</p>
                         <span class="project-tech">AIPS</span>
+                        <div class="project-details">
+                            <p><strong>Features:</strong> Real-time monitoring, dashboard, automated alerts.</p>
+                            <p><strong>Technologies:</strong> IoT sensors, web development, database.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1750,22 +1835,15 @@
 
         const projectCards = document.querySelectorAll('.project-card');
         projectCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const cardRect = card.getBoundingClientRect();
-                const x = e.clientX - cardRect.left;
-                const y = e.clientY - cardRect.top;
-                
-                const centerX = cardRect.width / 2;
-                const centerY = cardRect.height / 2;
-                
-                const angleY = (x - centerX) / 25;
-                const angleX = (centerY - y) / 25;
-                
-                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.05, 1.05, 1.05)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            card.addEventListener('click', () => {
+                // Close other expanded cards
+                projectCards.forEach(c => {
+                    if (c !== card) {
+                        c.classList.remove('expanded');
+                    }
+                });
+                // Toggle current card
+                card.classList.toggle('expanded');
             });
         });
     </script>
