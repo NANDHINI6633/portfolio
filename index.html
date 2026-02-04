@@ -383,12 +383,14 @@
             height: 350px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid transparent;
-            background: linear-gradient(135deg, var(--primary), var(--accent)) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: profileGlow 3s ease-in-out infinite alternate;
+            border: 5px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.5);
         }
 
         .personal-details {
